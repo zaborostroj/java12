@@ -16,7 +16,7 @@ class PropReader {
     private Properties properties;
     private String filePath;
     private static final String NOT_AVAILABLE = "N/A";
-    private static final String DEF_PHOTO_PATH = "files/default_photo.jpg";
+    private static final String DEF_PHOTO_PATH = "default_photo.jpg";
 
     PropReader(String path) {
         Properties defaultProperties = new Properties();
@@ -45,7 +45,7 @@ class PropReader {
     private void readProperties() {
         try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
             stream.forEach(item->{
-                if (!item.equals("")) {
+                if (!item.equals("") && !item.startsWith(";")) {
                     String[] ar = item.split("=");
                     if (ar.length >= 2) {
                         properties.setProperty(ar[0], ar[1]);

@@ -19,7 +19,7 @@ class HtmlBuilder {
 
     HtmlBuilder(String path) {
         templateHtml = "";
-        outputHtmlPath = "output.html";
+        outputHtmlPath = "files/output.html";
 
         templateHtmlPath = path;
         File f = new File(templateHtmlPath);
