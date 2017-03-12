@@ -9,7 +9,7 @@ import java.util.Properties;
  * HtmlBuilder reads the template html, inserts values from data.properties
  * and generates output.html
  */
-class HtmlBuilder {
+class HtmlBuilder implements HtmlBuilderIntf {
     private String templateHtmlPath;
     private String outputHtmlPath;
     private String templateHtml;
@@ -41,7 +41,8 @@ class HtmlBuilder {
         }
     }
 
-    void makeHtml(Properties properties) {
+    @Override
+    public void makeHtml(Properties properties) {
         templateHtml = templateHtml.replace("{name}", properties.getProperty("name"));
         templateHtml = templateHtml.replace("{birth_date}", properties.getProperty("birth_date"));
         templateHtml = templateHtml.replace("{phone_number}", properties.getProperty("phone_number"));
