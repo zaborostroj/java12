@@ -1,21 +1,16 @@
 package maketalents;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 /**
  * PropReader reads the data.properties and sets default values
  */
 
-class PropReader {
+class PropReader implements PropReaderIntf {
 
     private Properties properties;
     private String propertyFilePath;
-    private static final String NOT_AVAILABLE = "N/A";
-    private static final String DEF_PHOTO_PATH = "default_photo.jpg";
 
     PropReader(String path) {
         Properties defaultProperties = new Properties();
@@ -63,7 +58,8 @@ class PropReader {
         }
     }
 
-    Properties getProperties() {
+    @Override
+    public Properties getProperties() {
         return properties;
     }
 }
