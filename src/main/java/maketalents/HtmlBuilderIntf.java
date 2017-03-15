@@ -1,7 +1,7 @@
 package maketalents;
 
-import java.util.Properties;
+import maketalents.datamodel.UserData;
 
 public interface HtmlBuilderIntf {
-    void makeHtml(Properties properties);
+    void makeHtml(UserData userData);
 }

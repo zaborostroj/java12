@@ -1,9 +1,10 @@
 package maketalents;
 
+import maketalents.datamodel.UserData;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Properties;
 
 /**
  * HtmlBuilder reads the template html, inserts values from data.properties
@@ -14,6 +15,9 @@ class HtmlBuilder implements HtmlBuilderIntf {
     private String outputHtmlPath;
     private String templateHtml;
 
+    /**
+     * @param path - path to template.html (absolute from .jar root)
+     */
     HtmlBuilder(String path) {
         templateHtml = "";
         outputHtmlPath = "output.html";
@@ -23,6 +27,9 @@ class HtmlBuilder implements HtmlBuilderIntf {
         readTemplateFile();
     }
 
+    /**
+     * Reads template.html
+     */
     private void readTemplateFile() {
         try {
             InputStream is = getClass().getResourceAsStream(templateHtmlPath);
@@ -41,21 +48,26 @@ class HtmlBuilder implements HtmlBuilderIntf {
         }
     }
 
+    /**
+     * Replace tags {} in templateHtml with corresponding userData fields
+     *
+     * @param userData - user data read from .properties file
+     */
     @Override
-    public void makeHtml(Properties properties) {
-        templateHtml = templateHtml.replace("{name}", properties.getProperty("name"));
-        templateHtml = templateHtml.replace("{birth_date}", properties.getProperty("birth_date"));
-        templateHtml = templateHtml.replace("{phone_number}", properties.getProperty("phone_number"));
-        templateHtml = templateHtml.replace("{email}", properties.getProperty("email"));
-        templateHtml = templateHtml.replace("{skype}", properties.getProperty("skype"));
+    public void makeHtml(UserData userData) {
+        templateHtml = templateHtml.replace("{name}", userData.getName());
+        templateHtml = templateHtml.replace("{birth_date}", userData.getBirthDay());
+        templateHtml = templateHtml.replace("{phone_number}", userData.getPhoneNumber());
+        templateHtml = templateHtml.replace("{email}", userData.getEmail());
+        templateHtml = templateHtml.replace("{skype}", userData.getSkype());
 
-        templateHtml = templateHtml.replace("{photo}", properties.getProperty("photo"));
+        templateHtml = templateHtml.replace("{photo}", userData.getPhoto());
 
-        templateHtml = templateHtml.replace("{goal}", propertyToHtml(properties, "goal"));
-        templateHtml = templateHtml.replace("{experience}", propertyToHtml(properties, "experience"));
-        templateHtml = templateHtml.replace("{education}", propertyToHtml(properties, "education"));
-        templateHtml = templateHtml.replace("{add_education}", propertyToHtml(properties, "add_education"));
-        templateHtml = templateHtml.replace("{other_info}", propertyToHtml(properties, "other_info"));
+        templateHtml = templateHtml.replace("{goal}", propertyToHtml(userData.getGoal()));
+        templateHtml = templateHtml.replace("{experience}", propertyToHtml(userData.getExperience()));
+        templateHtml = templateHtml.replace("{education}", propertyToHtml(userData.getEducation()));
+        templateHtml = templateHtml.replace("{add_education}", propertyToHtml(userData.getAddEducation()));
+        templateHtml = templateHtml.replace("{other_info}", propertyToHtml(userData.getOtherInfo()));
 
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(outputHtmlPath))) {
             writer.write(templateHtml);
@@ -65,8 +77,14 @@ class HtmlBuilder implements HtmlBuilderIntf {
         }
     }
 
-    private String propertyToHtml(Properties properties, String prop) {
-        String[] text = properties.getProperty(prop).split(";");
+    /**
+     * Generates <ol/> tag from property
+     *
+     * @param prop - multivalue property
+     * @return String - ordered list tag build from multivalue property
+     */
+    private String propertyToHtml(String prop) {
+        String[] text = prop.split(";");
 
         StringBuilder strBuilder = new StringBuilder();
         if (text.length == 1) {
