@@ -3,7 +3,6 @@ package maketalents.dao;
 import maketalents.datamodel.UserData;
 import maketalents.datamodel.UserPropertyKeys;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,9 +42,18 @@ public class DataPropReader implements DataPropReaderIntf {
         defaultProperties.setProperty("other_info", NOT_AVAILABLE);
 
         Properties properties = new Properties(defaultProperties);
+        InputStream is = getClass().getResourceAsStream(propertyFilePath);
 
         try {
-            InputStream is = getClass().getResourceAsStream(propertyFilePath);
+            properties.load(new InputStreamReader(is, "UTF-8"));
+            properties.list(System.out);
+
+            return properties;
+        } catch(IOException e) {
+            System.out.println("Error reading .properties file");
+            e.printStackTrace();
+        }
+            /*InputStream is = getClass().getResourceAsStream(propertyFilePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             while (true) {
                 String line = br.readLine();
@@ -67,7 +75,7 @@ public class DataPropReader implements DataPropReaderIntf {
         } catch (IOException e) {
             System.out.println("Error reading .properties file");
             e.printStackTrace();
-        }
+        }*/
         return null;
     }
 
