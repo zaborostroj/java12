@@ -45,6 +45,11 @@ public interface UserPropertyKeys {
     String EXPERIENCE = "experience";
 
     /**
+     * Experience multivalue key
+     */
+    String EXPERIENCE_M = "experience_m";
+
+    /**
      * Education
      */
     String EDUCATION = "education";

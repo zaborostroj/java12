@@ -6,6 +6,8 @@ import maketalents.datamodel.UserPropertyKeys;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -83,6 +85,22 @@ public class DataPropReader implements DataPropReaderIntf {
     public UserData getUserData() {
         UserData userData = null;
         if (this.userPropFile != null) {
+            Map<String, String> usData = new HashMap<>();
+
+            String prop = userPropFile.getProperty(UserPropertyKeys.EXPERIENCE_M);
+            if (prop != null) {
+                for (String s : prop.split(";")) {
+                    usData.put(UserPropertyKeys.EXPERIENCE_M, s);
+                }
+            } else {
+                usData.put(
+                        UserPropertyKeys.EXPERIENCE,
+                        userPropFile.getProperty(UserPropertyKeys.EXPERIENCE, "N/A")
+                );
+            }
+            System.out.println(usData.size());
+            usData.forEach((k, v) -> System.out.println(k + " : " + v));
+
             userData = new UserData(
                     userPropFile.getProperty(UserPropertyKeys.NAME),
                     userPropFile.getProperty(UserPropertyKeys.BIRTHDAY),
