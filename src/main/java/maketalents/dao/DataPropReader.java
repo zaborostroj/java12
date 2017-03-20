@@ -48,36 +48,12 @@ public class DataPropReader implements DataPropReaderIntf {
 
         try {
             properties.load(new InputStreamReader(is, "UTF-8"));
-            properties.list(System.out);
 
             return properties;
         } catch(IOException e) {
             System.out.println("Error reading .properties file");
             e.printStackTrace();
         }
-            /*InputStream is = getClass().getResourceAsStream(propertyFilePath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while (true) {
-                String line = br.readLine();
-                if (line == null) {
-                    break;
-                }
-
-                // miss empty and commented with ";" lines
-                if (!line.equals("") && !line.startsWith(";")) {
-                    String[] ar = line.split("=");
-
-                    // miss empty fields
-                    if (ar.length >= 2) {
-                        properties.setProperty(ar[0], ar[1]);
-                    }
-                }
-            }
-            return properties;
-        } catch (IOException e) {
-            System.out.println("Error reading .properties file");
-            e.printStackTrace();
-        }*/
         return null;
     }
 
@@ -85,22 +61,6 @@ public class DataPropReader implements DataPropReaderIntf {
     public UserData getUserData() {
         UserData userData = null;
         if (this.userPropFile != null) {
-            Map<String, String> usData = new HashMap<>();
-
-            String prop = userPropFile.getProperty(UserPropertyKeys.EXPERIENCE_M);
-            if (prop != null) {
-                for (String s : prop.split(";")) {
-                    usData.put(UserPropertyKeys.EXPERIENCE_M, s);
-                }
-            } else {
-                usData.put(
-                        UserPropertyKeys.EXPERIENCE,
-                        userPropFile.getProperty(UserPropertyKeys.EXPERIENCE, "N/A")
-                );
-            }
-            System.out.println(usData.size());
-            usData.forEach((k, v) -> System.out.println(k + " : " + v));
-
             userData = new UserData(
                     userPropFile.getProperty(UserPropertyKeys.NAME),
                     userPropFile.getProperty(UserPropertyKeys.BIRTHDAY),
@@ -112,9 +72,31 @@ public class DataPropReader implements DataPropReaderIntf {
                     userPropFile.getProperty(UserPropertyKeys.EXPERIENCE),
                     userPropFile.getProperty(UserPropertyKeys.EDUCATION),
                     userPropFile.getProperty(UserPropertyKeys.ADD_EDUCATION),
-                    userPropFile.getProperty(UserPropertyKeys.OTHE_RINFO)
+                    userPropFile.getProperty(UserPropertyKeys.OTHER_INFO)
             );
         }
+        return userData;
+    }
+
+
+    public Map<String, String> getUserDataFromHashMap() {
+        Map<String, String> userData = new HashMap<>();
+
+        userData.put(UserPropertyKeys.NAME, userPropFile.getProperty(UserPropertyKeys.NAME, "N/A"));
+        userData.put(UserPropertyKeys.BIRTHDAY, userPropFile.getProperty(UserPropertyKeys.BIRTHDAY, "N/A"));
+        userData.put(UserPropertyKeys.PHONE_NUMBER, userPropFile.getProperty(UserPropertyKeys.PHONE_NUMBER, "N/A"));
+        userData.put(UserPropertyKeys.EMAIL, userPropFile.getProperty(UserPropertyKeys.EMAIL, "N/A"));
+        userData.put(UserPropertyKeys.SKYPE, userPropFile.getProperty(UserPropertyKeys.SKYPE, "N/A"));
+        userData.put(UserPropertyKeys.PHOTO, userPropFile.getProperty(UserPropertyKeys.PHOTO, "N/A"));
+        userData.put(UserPropertyKeys.GOAL, userPropFile.getProperty(UserPropertyKeys.GOAL, "N/A"));
+        userData.put(UserPropertyKeys.EXPERIENCE, userPropFile.getProperty(UserPropertyKeys.EXPERIENCE, "N/A"));
+        userData.put(UserPropertyKeys.EDUCATION, userPropFile.getProperty(UserPropertyKeys.EDUCATION, "N/A"));
+        userData.put(UserPropertyKeys.ADD_EDUCATION, userPropFile.getProperty(UserPropertyKeys.ADD_EDUCATION, "N/A"));
+        userData.put(UserPropertyKeys.OTHER_INFO, userPropFile.getProperty(UserPropertyKeys.OTHER_INFO, "N/A"));
+
+        userData.put(UserPropertyKeys.MULTYKEY_PROPERTIES, userPropFile.getProperty(UserPropertyKeys.MULTYKEY_PROPERTIES, ""));
+        userData.put(UserPropertyKeys.PROPERTY_SEPARATOR, userPropFile.getProperty(UserPropertyKeys.PROPERTY_SEPARATOR, ""));
+
         return userData;
     }
 }

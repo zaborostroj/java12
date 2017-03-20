@@ -1,5 +1,7 @@
 package maketalents.datamodel;
 
+import java.util.ArrayList;
+
 /**
  * Object holds user data read from .property file
  */
@@ -59,6 +61,16 @@ public class UserData {
      */
     private String otherInfo;
 
+    /**
+     * Properties that should be converted to <ol/> in output.html
+     */
+    private ArrayList<String> multykeyProperties;
+
+    /**
+     * Values separator for multykey properties
+     */
+    private String propertySeparator;
+
     public UserData(
             String name,
             String birthDay,
@@ -70,7 +82,8 @@ public class UserData {
             String experience,
             String education,
             String addEducation,
-            String otherInfo) {
+            String otherInfo
+    ) {
         this.name = name;
         this.birthDay = birthDay;
         this.phoneNumber = phoneNumber;
@@ -82,6 +95,8 @@ public class UserData {
         this.education = education;
         this.addEducation = addEducation;
         this.otherInfo = otherInfo;
+        this.multykeyProperties = multykeyProperties;
+        this.propertySeparator = propertySeparator;
     }
 
     public String getName() {
@@ -171,4 +186,21 @@ public class UserData {
     public void setOtherInfo(String otherInfo) {
         this.otherInfo = otherInfo;
     }
+
+    public ArrayList<String> getMultykeyProperties() {
+        return multykeyProperties;
+    }
+
+    public void setMultykeyProperties(ArrayList<String> multykeyProperties) {
+        this.multykeyProperties = multykeyProperties;
+    }
+
+    public String getPropertySeparator() {
+        return propertySeparator;
+    }
+
+    public void setPropertySeparator(String propertySeparator) {
+        this.propertySeparator = propertySeparator;
+    }
+
 }

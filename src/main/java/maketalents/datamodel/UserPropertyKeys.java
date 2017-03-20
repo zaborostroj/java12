@@ -45,11 +45,6 @@ public interface UserPropertyKeys {
     String EXPERIENCE = "experience";
 
     /**
-     * Experience multivalue key
-     */
-    String EXPERIENCE_M = "experience_m";
-
-    /**
      * Education
      */
     String EDUCATION = "education";
@@ -62,5 +57,15 @@ public interface UserPropertyKeys {
     /**
      * Other info
      */
-    String OTHE_RINFO = "other_info";
+    String OTHER_INFO = "other_info";
+
+    /**
+     * Properties that should be converted to <ol/> in output.html
+     */
+    String MULTYKEY_PROPERTIES = "multykey_properties";
+
+    /**
+     * Values separator for multykey properties
+     */
+    String PROPERTY_SEPARATOR = "property_separator";
 }
