@@ -1,11 +1,14 @@
 package maketalents.datamodel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Object holds user data read from .property file
  */
 public class UserData {
+    private String DEF_PHOTO_PATH = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg";
+
     /**
      * Name
      */
@@ -62,145 +65,135 @@ public class UserData {
     private String otherInfo;
 
     /**
-     * Properties that should be converted to <ol/> in output.html
-     */
-    private ArrayList<String> multykeyProperties;
-
-    /**
      * Values separator for multykey properties
      */
     private String propertySeparator;
 
-    public UserData(
-            String name,
-            String birthDay,
-            String phoneNumber,
-            String email,
-            String skype,
-            String photo,
-            String goal,
-            String experience,
-            String education,
-            String addEducation,
-            String otherInfo
-    ) {
-        this.name = name;
-        this.birthDay = birthDay;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.skype = skype;
-        this.photo = photo;
-        this.goal = goal;
-        this.experience = experience;
-        this.education = education;
-        this.addEducation = addEducation;
-        this.otherInfo = otherInfo;
-        this.multykeyProperties = multykeyProperties;
-        this.propertySeparator = propertySeparator;
+    /**
+     * Properties that should be converted to <ol/> in output.html
+     */
+    private ArrayList<String> multykeyProperties;
+
+    public UserData() {
+        String NOT_AVAILABLE = "N/A"; // Default value for empty fields
+        name = NOT_AVAILABLE;
+        birthDay = NOT_AVAILABLE;
+        phoneNumber = NOT_AVAILABLE;
+        email = NOT_AVAILABLE;
+        skype = NOT_AVAILABLE;
+        photo = DEF_PHOTO_PATH;
+        goal = NOT_AVAILABLE;
+        experience = NOT_AVAILABLE;
+        education = NOT_AVAILABLE;
+        addEducation = NOT_AVAILABLE;
+        otherInfo = NOT_AVAILABLE;
+        propertySeparator = null;
+        multykeyProperties = null;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 
-    public String getBirthDay() {
+    public synchronized String getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(String birthDay) {
+    public synchronized void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
 
-    public String getPhoneNumber() {
+    public synchronized String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public synchronized void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
+    public synchronized String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public synchronized void setEmail(String email) {
         this.email = email;
     }
 
-    public String getSkype() {
+    public synchronized String getSkype() {
         return skype;
     }
 
-    public void setSkype(String skype) {
+    public synchronized void setSkype(String skype) {
         this.skype = skype;
     }
 
-    public String getPhoto() {
+    public synchronized String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public synchronized void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public String getGoal() {
+    public synchronized String getGoal() {
         return goal;
     }
 
-    public void setGoal(String goal) {
+    public synchronized void setGoal(String goal) {
         this.goal = goal;
     }
 
-    public String getExperience() {
+    public synchronized String getExperience() {
         return experience;
     }
 
-    public void setExperience(String experience) {
+    public synchronized void setExperience(String experience) {
         this.experience = experience;
     }
 
-    public String getEducation() {
+    public synchronized String getEducation() {
         return education;
     }
 
-    public void setEducation(String education) {
+    public synchronized void setEducation(String education) {
         this.education = education;
     }
 
-    public String getAddEducation() {
+    public synchronized String getAddEducation() {
         return addEducation;
     }
 
-    public void setAddEducation(String addEducation) {
+    public synchronized void setAddEducation(String addEducation) {
         this.addEducation = addEducation;
     }
 
-    public String getOtherInfo() {
+    public synchronized String getOtherInfo() {
         return otherInfo;
     }
 
-    public void setOtherInfo(String otherInfo) {
+    public synchronized void setOtherInfo(String otherInfo) {
         this.otherInfo = otherInfo;
     }
 
-    public ArrayList<String> getMultykeyProperties() {
-        return multykeyProperties;
-    }
-
-    public void setMultykeyProperties(ArrayList<String> multykeyProperties) {
-        this.multykeyProperties = multykeyProperties;
-    }
-
-    public String getPropertySeparator() {
+    public synchronized String getPropertySeparator() {
         return propertySeparator;
     }
 
-    public void setPropertySeparator(String propertySeparator) {
+    public synchronized void setPropertySeparator(String propertySeparator) {
         this.propertySeparator = propertySeparator;
+    }
+
+    public synchronized void setMultykeyProperties(String multykeyProperties) {
+        if (this.propertySeparator != null) {
+            this.multykeyProperties = new ArrayList<>();
+            Collections.addAll(this.multykeyProperties, multykeyProperties.split(this.propertySeparator));
+        } else {
+            this.multykeyProperties = null;
+        }
     }
 
 }

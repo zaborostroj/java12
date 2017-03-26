@@ -6,44 +6,38 @@ import maketalents.datamodel.UserPropertyKeys;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
- * Implementation fo DataPropReaderIntf
+ * Implementation for DataPropReaderIntf
  */
-public class DataPropReader implements DataPropReaderIntf {
+public class DataPropReader implements DataPropReaderIntf, Runnable {
     /**
      * Properties holder
      */
     private Properties userPropFile;
+    private String propertyFilePath;
+    private UserData userData;
 
-    public DataPropReader(String propertyFilePath) {
+    public DataPropReader(String propertyFilePath, UserData userData) {
+        this.propertyFilePath = propertyFilePath;
+        this.userData = userData;
+    }
+
+    @Override
+    public void run() {
         this.userPropFile = readPropertyFile(propertyFilePath);
+        fillUserDataObject(this.userData);
     }
 
     /**
      * Read .properties file
      *
-     * @param propertyFilePath - path to data.properties file (absolute from .jar root)
+     * @param propertyFilePath - path to data1.properties file (absolute from .jar root)
      * @return Properties
      */
     private Properties readPropertyFile(String propertyFilePath) {
-        Properties defaultProperties = new Properties();
-        defaultProperties.setProperty("name", NOT_AVAILABLE);
-        defaultProperties.setProperty("birth_date", NOT_AVAILABLE);
-        defaultProperties.setProperty("phone_number", NOT_AVAILABLE);
-        defaultProperties.setProperty("email", NOT_AVAILABLE);
-        defaultProperties.setProperty("skype", NOT_AVAILABLE);
-        defaultProperties.setProperty("photo", DEF_PHOTO_PATH);
-        defaultProperties.setProperty("goal", NOT_AVAILABLE);
-        defaultProperties.setProperty("experience", NOT_AVAILABLE);
-        defaultProperties.setProperty("education", NOT_AVAILABLE);
-        defaultProperties.setProperty("add_education", NOT_AVAILABLE);
-        defaultProperties.setProperty("other_info", NOT_AVAILABLE);
-
-        Properties properties = new Properties(defaultProperties);
+        Properties properties = new Properties();
         InputStream is = getClass().getResourceAsStream(propertyFilePath);
 
         try {
@@ -58,44 +52,71 @@ public class DataPropReader implements DataPropReaderIntf {
     }
 
     @Override
-    public UserData getUserData() {
-        UserData userData = null;
-        if (this.userPropFile != null) {
-            userData = new UserData(
-                    userPropFile.getProperty(UserPropertyKeys.NAME),
-                    userPropFile.getProperty(UserPropertyKeys.BIRTHDAY),
-                    userPropFile.getProperty(UserPropertyKeys.PHONE_NUMBER),
-                    userPropFile.getProperty(UserPropertyKeys.EMAIL),
-                    userPropFile.getProperty(UserPropertyKeys.SKYPE),
-                    userPropFile.getProperty(UserPropertyKeys.PHOTO),
-                    userPropFile.getProperty(UserPropertyKeys.GOAL),
-                    userPropFile.getProperty(UserPropertyKeys.EXPERIENCE),
-                    userPropFile.getProperty(UserPropertyKeys.EDUCATION),
-                    userPropFile.getProperty(UserPropertyKeys.ADD_EDUCATION),
-                    userPropFile.getProperty(UserPropertyKeys.OTHER_INFO)
-            );
+    public UserData fillUserDataObject(UserData userData) {
+        String singleProperty = userPropFile.getProperty(UserPropertyKeys.NAME);
+        if (singleProperty != null) {
+            userData.setName(singleProperty);
         }
-        return userData;
-    }
 
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.BIRTHDAY);
+        if (singleProperty != null) {
+            userData.setBirthDay(singleProperty);
+        }
 
-    public Map<String, String> getUserDataFromHashMap() {
-        Map<String, String> userData = new HashMap<>();
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.PHONE_NUMBER);
+        if (singleProperty != null) {
+            userData.setPhoneNumber(singleProperty);
+        }
 
-        userData.put(UserPropertyKeys.NAME, userPropFile.getProperty(UserPropertyKeys.NAME, "N/A"));
-        userData.put(UserPropertyKeys.BIRTHDAY, userPropFile.getProperty(UserPropertyKeys.BIRTHDAY, "N/A"));
-        userData.put(UserPropertyKeys.PHONE_NUMBER, userPropFile.getProperty(UserPropertyKeys.PHONE_NUMBER, "N/A"));
-        userData.put(UserPropertyKeys.EMAIL, userPropFile.getProperty(UserPropertyKeys.EMAIL, "N/A"));
-        userData.put(UserPropertyKeys.SKYPE, userPropFile.getProperty(UserPropertyKeys.SKYPE, "N/A"));
-        userData.put(UserPropertyKeys.PHOTO, userPropFile.getProperty(UserPropertyKeys.PHOTO, "N/A"));
-        userData.put(UserPropertyKeys.GOAL, userPropFile.getProperty(UserPropertyKeys.GOAL, "N/A"));
-        userData.put(UserPropertyKeys.EXPERIENCE, userPropFile.getProperty(UserPropertyKeys.EXPERIENCE, "N/A"));
-        userData.put(UserPropertyKeys.EDUCATION, userPropFile.getProperty(UserPropertyKeys.EDUCATION, "N/A"));
-        userData.put(UserPropertyKeys.ADD_EDUCATION, userPropFile.getProperty(UserPropertyKeys.ADD_EDUCATION, "N/A"));
-        userData.put(UserPropertyKeys.OTHER_INFO, userPropFile.getProperty(UserPropertyKeys.OTHER_INFO, "N/A"));
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.EMAIL);
+        if (singleProperty != null) {
+            userData.setEmail(singleProperty);
+        }
 
-        userData.put(UserPropertyKeys.MULTYKEY_PROPERTIES, userPropFile.getProperty(UserPropertyKeys.MULTYKEY_PROPERTIES, ""));
-        userData.put(UserPropertyKeys.PROPERTY_SEPARATOR, userPropFile.getProperty(UserPropertyKeys.PROPERTY_SEPARATOR, ""));
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.SKYPE);
+        if (singleProperty != null) {
+            userData.setSkype(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.PHOTO);
+        if (singleProperty != null) {
+            userData.setPhoto(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.GOAL);
+        if (singleProperty != null) {
+            userData.setGoal(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.EXPERIENCE);
+        if (singleProperty != null) {
+            userData.setExperience(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.EDUCATION);
+        if (singleProperty != null) {
+            userData.setEducation(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.ADD_EDUCATION);
+        if (singleProperty != null) {
+            userData.setAddEducation(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.OTHER_INFO);
+        if (singleProperty != null) {
+            userData.setOtherInfo(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.PROPERTY_SEPARATOR);
+        if (singleProperty != null) {
+            userData.setPropertySeparator(singleProperty);
+        }
+
+        singleProperty = userPropFile.getProperty(UserPropertyKeys.MULTYKEY_PROPERTIES);
+        if (singleProperty != null) {
+            userData.setMultykeyProperties(singleProperty);
+        }
 
         return userData;
     }
