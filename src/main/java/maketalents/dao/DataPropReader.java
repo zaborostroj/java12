@@ -2,6 +2,9 @@ package maketalents.dao;
 
 import maketalents.datamodel.UserData;
 import maketalents.datamodel.UserPropertyKeys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,24 +14,25 @@ import java.util.Properties;
 /**
  * Implementation for DataPropReaderIntf
  */
-public class DataPropReader implements DataPropReaderIntf, Runnable {
+@Component
+public class DataPropReader implements DataPropReaderIntf/*, Runnable */{
     /**
      * Properties holder
      */
     private Properties userPropFile;
-    private String propertyFilePath;
     private UserData userData;
 
-    public DataPropReader(String propertyFilePath, UserData userData) {
-        this.propertyFilePath = propertyFilePath;
+
+    @Autowired
+    public DataPropReader(@Qualifier("userData") UserData userData) {
         this.userData = userData;
     }
 
-    @Override
-    public void run() {
-        this.userPropFile = readPropertyFile(propertyFilePath);
-        fillUserDataObject(this.userData);
-    }
+//    @Override
+//    public void run() {
+//        this.userPropFile = readPropertyFile(propertyFilePath);
+//        fillUserDataObject(this.userData);
+//    }
 
     /**
      * Read .properties file
@@ -53,6 +57,8 @@ public class DataPropReader implements DataPropReaderIntf, Runnable {
 
     @Override
     public UserData fillUserDataObject(UserData userData) {
+        this.userPropFile = readPropertyFile(propertyFilePath);
+
         String singleProperty = userPropFile.getProperty(UserPropertyKeys.NAME);
         if (singleProperty != null) {
             userData.setName(singleProperty);

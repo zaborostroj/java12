@@ -1,6 +1,7 @@
 package maketalents;
 
 import maketalents.datamodel.UserData;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,19 +11,14 @@ import java.nio.file.Paths;
  * HtmlBuilder reads the template html, inserts values from data1.properties
  * and generates output.html
  */
+@Component
 class HtmlBuilder implements HtmlBuilderIntf {
-    private String templateHtmlPath;
     private String outputHtmlPath;
     private String templateHtml;
 
-    /**
-     * @param path - path to template.html (absolute from .jar root)
-     */
-    HtmlBuilder(String path) {
+    HtmlBuilder() {
         templateHtml = "";
         outputHtmlPath = "output.html";
-
-        templateHtmlPath = path;
 
         readTemplateFile();
     }
