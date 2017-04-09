@@ -10,8 +10,6 @@ import java.util.Collections;
  */
 @Component
 public class UserData {
-    private String DEF_PHOTO_PATH = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg";
-
     /**
      * Name
      */
@@ -79,6 +77,7 @@ public class UserData {
 
     public UserData() {
         String NOT_AVAILABLE = "N/A"; // Default value for empty fields
+        String DEF_PHOTO_PATH = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg"; // Default photo
         name = NOT_AVAILABLE;
         birthDay = NOT_AVAILABLE;
         phoneNumber = NOT_AVAILABLE;
@@ -143,6 +142,9 @@ public class UserData {
     }
 
     public String getGoal() {
+        if (this.getPropertySeparator() != null && this.getMultykeyProperties().contains(UserPropertyKeys.GOAL)) {
+            return propertyToHtml(this.goal, this.propertySeparator);
+        }
         return goal;
     }
 
@@ -151,6 +153,9 @@ public class UserData {
     }
 
     public String getExperience() {
+        if (this.getPropertySeparator() != null && this.getMultykeyProperties().contains(UserPropertyKeys.EXPERIENCE)) {
+            return propertyToHtml(this.experience, this.propertySeparator);
+        }
         return experience;
     }
 
@@ -159,6 +164,9 @@ public class UserData {
     }
 
     public String getEducation() {
+        if (this.getPropertySeparator() != null && this.getMultykeyProperties().contains(UserPropertyKeys.EDUCATION)) {
+            return propertyToHtml(this.education, this.propertySeparator);
+        }
         return education;
     }
 
@@ -167,6 +175,9 @@ public class UserData {
     }
 
     public String getAddEducation() {
+        if (this.getPropertySeparator() != null && this.getMultykeyProperties().contains(UserPropertyKeys.ADD_EDUCATION)) {
+            return propertyToHtml(this.addEducation, this.propertySeparator);
+        }
         return addEducation;
     }
 
@@ -175,6 +186,9 @@ public class UserData {
     }
 
     public String getOtherInfo() {
+        if (this.getPropertySeparator() != null && this.getMultykeyProperties().contains(UserPropertyKeys.OTHER_INFO)) {
+            return propertyToHtml(this.otherInfo, this.propertySeparator);
+        }
         return otherInfo;
     }
 
@@ -201,6 +215,29 @@ public class UserData {
 
     public ArrayList getMultykeyProperties() {
         return multykeyProperties;
+    }
+
+    /**
+     * Generates <ol/> tag from multivalue property
+     *
+     * @param prop - multivalue property
+     * @return String - ordered list tag build from multivalue property
+     */
+    private String propertyToHtml(String prop, String propertySeparator) {
+        String[] text = prop.split(propertySeparator);
+
+        StringBuilder strBuilder = new StringBuilder();
+        if (text.length == 1) {
+            strBuilder.append(text[0]);
+        } else if (text.length > 1) {
+            strBuilder.append("<ol>");
+            for (String str : text) {
+                strBuilder.append("<li>").append(str).append("</li>");
+            }
+            strBuilder.append("</ol>");
+        }
+
+        return strBuilder.toString();
     }
 
 }

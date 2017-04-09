@@ -2,9 +2,9 @@ package maketalents.dao;
 
 import maketalents.datamodel.UserData;
 import maketalents.datamodel.UserPropertyKeys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Qualifier;
+//import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,25 +14,14 @@ import java.util.Properties;
 /**
  * Implementation for DataPropReader
  */
-@Component
-public class DataPropReaderImpl implements DataPropReader/*, Runnable */{
-    /**
-     * Properties holder
-     */
-    private Properties userPropFile;
-    private UserData userData;
+public class DataPropReaderImpl implements DataPropReader {
+    private String propertyFilePath;
 
-
-    @Autowired
-    public DataPropReaderImpl(@Qualifier("userData") UserData userData) {
-        this.userData = userData;
+    public DataPropReaderImpl(String propertyFilePath) {
+        if (!propertyFilePath.equals("")) {
+            this.propertyFilePath = propertyFilePath;
+        }
     }
-
-//    @Override
-//    public void run() {
-//        this.userPropFile = readPropertyFile(propertyFilePath);
-//        fillUserDataObject(this.userData);
-//    }
 
     /**
      * Read .properties file
@@ -42,7 +31,8 @@ public class DataPropReaderImpl implements DataPropReader/*, Runnable */{
      */
     private Properties readPropertyFile(String propertyFilePath) {
         Properties properties = new Properties();
-        InputStream is = getClass().getResourceAsStream(propertyFilePath);
+
+        InputStream is = getClass().getResourceAsStream(propertyFilePath /*"/res/data1.properties"*/);
 
         try {
             properties.load(new InputStreamReader(is, "UTF-8"));
@@ -55,10 +45,17 @@ public class DataPropReaderImpl implements DataPropReader/*, Runnable */{
         return null;
     }
 
+    /**
+     *
+     * @param userData - UserData object holding properties read from .property file
+     * @return UserData
+     */
     @Override
     public UserData fillUserDataObject(UserData userData) {
-        this.userPropFile = readPropertyFile(propertyFilePath);
+        /* Properties holder */
+        Properties userPropFile = readPropertyFile(propertyFilePath);
 
+        assert userPropFile != null;
         String singleProperty = userPropFile.getProperty(UserPropertyKeys.NAME);
         if (singleProperty != null) {
             userData.setName(singleProperty);
