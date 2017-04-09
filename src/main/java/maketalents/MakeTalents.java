@@ -1,6 +1,6 @@
 package maketalents;
 
-import maketalents.dao.DataPropReader;
+import maketalents.dao.DataPropReaderImpl;
 import maketalents.datamodel.UserData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,10 +13,10 @@ public class MakeTalents {
 
         UserData userData = context.getBean("userData", UserData.class);
 
-        DataPropReader dataPropReader1 = context.getBean("dataPropReader", DataPropReader.class);
+        DataPropReaderImpl dataPropReader1 = context.getBean("dataPropReader", DataPropReaderImpl.class);
         dataPropReader1.fillUserDataObject(userData);
 
-        HtmlBuilder htmlBuilder = context.getBean("htmlBuilder", HtmlBuilder.class);
+        HtmlBuilderImpl htmlBuilder = context.getBean("htmlBuilder", HtmlBuilderImpl.class);
         htmlBuilder.makeHtml(userData);
     }
 }
