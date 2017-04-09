@@ -1,9 +1,6 @@
-Домашка курса Java12
+Домашка 7 курса Java12
+Spring Boot MVC
 
-запустить из target/   java -jar homework-1.0-SNAPSHOT.jar
-рядом с .jar появится output.html
-
-для свойств с несколькими значениями:
-- указать название свойства в ключе "multykey_properties"
-- обязательно указать "property_separator"
-- перечислить все значения свойства через property_separator
+В папке /resources/res/ два файла data1.properties, data2.properties.
+Томкэт слушает порт 8090 (так было нужно на рабочей машине).
+Для получения готового резюме идем по адресу /read_props?prop_file_path=data1.properties.

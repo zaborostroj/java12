@@ -199,4 +199,8 @@ public class UserData {
         }
     }
 
+    public ArrayList getMultykeyProperties() {
+        return multykeyProperties;
+    }
+
 }
