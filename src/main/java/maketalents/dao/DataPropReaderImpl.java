@@ -20,7 +20,7 @@ public class DataPropReaderImpl implements DataPropReader {
     public DataPropReaderImpl() {}
 
     @Override
-    public UserData getUserData() {
+    public UserData getUserData() throws IOException {
 
         UserData userData = new UserData();
 
@@ -104,7 +104,7 @@ public class DataPropReaderImpl implements DataPropReader {
      * @param propertyFilePath - path to data1.properties file (absolute from .jar root)
      * @return Properties
      */
-    private Properties readPropertyFile(String propertyFilePath) {
+    private Properties readPropertyFile(String propertyFilePath) throws IOException {
         Properties properties = new Properties();
 
 
@@ -115,7 +115,8 @@ public class DataPropReaderImpl implements DataPropReader {
         } catch(IOException e) {
             System.out.println("Error reading .properties file");
             e.printStackTrace();
+            throw new IOException(e);
         }
-        return null;
+        //return null;
     }
 }

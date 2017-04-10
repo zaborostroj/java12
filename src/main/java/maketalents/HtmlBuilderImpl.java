@@ -28,7 +28,7 @@ class HtmlBuilderImpl implements HtmlBuilder {
      * Replace tags {} in outputHtml with corresponding userData fields
      */
     @Override
-    public void makeHtml() {
+    public void makeHtml() throws IOException {
         UserData userData = dataPropReaderService.getUserData();
         readTemplateFile();
 
@@ -80,7 +80,7 @@ class HtmlBuilderImpl implements HtmlBuilder {
     /**
      * Reads template.html
      */
-    private void readTemplateFile() {
+    private void readTemplateFile() throws IOException {
         try (InputStream is = getClass().getResourceAsStream(templateHtmlPath)) {
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             while (true) {
@@ -91,9 +91,10 @@ class HtmlBuilderImpl implements HtmlBuilder {
 
                 outputHtml += line + "\n";
             }
-        } catch (Exception ex) {
+        } catch (Exception e) {
             System.out.println("Error reading template HTML");
-            ex.printStackTrace();
+            e.printStackTrace();
+            throw new IOException(e);
         }
     }
 

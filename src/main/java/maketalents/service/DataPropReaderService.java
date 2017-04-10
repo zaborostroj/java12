@@ -5,6 +5,8 @@ import maketalents.datamodel.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 /**
  * Service for DataPropReader
  */
@@ -15,7 +17,7 @@ public class DataPropReaderService {
 
     public DataPropReaderService() {}
 
-    public UserData getUserData() {
+    public UserData getUserData() throws IOException {
         return dataPropReader.getUserData();
     }
 }
