@@ -1,7 +1,5 @@
 package maketalents;
 
-import maketalents.dao.DataPropReader;
-import maketalents.datamodel.UserData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,13 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class MakeTalents {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(MakeTalents.class, args);
-
-        UserData userData = context.getBean("userData", UserData.class);
-
-        DataPropReader dataPropReader1 = context.getBean("dataPropReader", DataPropReader.class);
-        dataPropReader1.fillUserDataObject(userData);
-
-        HtmlBuilder htmlBuilder = context.getBean("htmlBuilder", HtmlBuilder.class);
-        htmlBuilder.makeHtml(userData);
+        HtmlBuilderImpl htmlBuilder = context.getBean("htmlBuilderImpl", HtmlBuilderImpl.class);
+        htmlBuilder.makeHtml();
     }
 }

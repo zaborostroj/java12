@@ -1,16 +1,11 @@
 package maketalents.datamodel;
 
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Object holds user data read from .property file
  */
-@Component
 public class UserData {
-    private String DEF_PHOTO_PATH = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg";
 
     /**
      * Name
@@ -84,7 +79,7 @@ public class UserData {
         phoneNumber = NOT_AVAILABLE;
         email = NOT_AVAILABLE;
         skype = NOT_AVAILABLE;
-        photo = DEF_PHOTO_PATH;
+        photo = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg";
         goal = NOT_AVAILABLE;
         experience = NOT_AVAILABLE;
         education = NOT_AVAILABLE;
@@ -190,13 +185,12 @@ public class UserData {
         this.propertySeparator = propertySeparator;
     }
 
-    public void setMultykeyProperties(String multykeyProperties) {
-        if (this.propertySeparator != null) {
-            this.multykeyProperties = new ArrayList<>();
-            Collections.addAll(this.multykeyProperties, multykeyProperties.split(this.propertySeparator));
-        } else {
-            this.multykeyProperties = null;
-        }
+    public ArrayList<String> getMultykeyProperties() {
+        return this.multykeyProperties;
+    }
+
+    public void setMultykeyProperties(ArrayList<String> multykeyProperties) {
+        this.multykeyProperties = multykeyProperties;
     }
 
 }
