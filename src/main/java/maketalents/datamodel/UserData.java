@@ -2,6 +2,9 @@ package maketalents.datamodel;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -9,70 +12,23 @@ import java.util.Collections;
  * Object holds user data read from .property file
  */
 @Component
+@Entity
 public class UserData {
-    /**
-     * Name
-     */
+    @GeneratedValue
+    @Id
+    private Long id;
     private String name;
-
-    /**
-     * Birthday
-     */
     private String birthDay;
-
-    /**
-     * Phone number
-     */
     private String phoneNumber;
-
-    /**
-     * E-mail
-     */
     private String email;
-
-    /**
-     * Skype
-     */
     private String skype;
-
-    /**
-     * Photo
-     */
     private String photo;
-
-    /**
-     * Goal
-     */
     private String goal;
-
-    /**
-     * Experience
-     */
     private String experience;
-
-    /**
-     * Education
-     */
     private String education;
-
-    /**
-     * Additional education, courses etc
-     */
     private String addEducation;
-
-    /**
-     * Other info
-     */
     private String otherInfo;
-
-    /**
-     * Values separator for multykey properties
-     */
     private String propertySeparator;
-
-    /**
-     * Properties that should be converted to <ol/> in output.html
-     */
     private ArrayList<String> multykeyProperties;
 
     public UserData() {
@@ -91,6 +47,14 @@ public class UserData {
         otherInfo = NOT_AVAILABLE;
         propertySeparator = null;
         multykeyProperties = null;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
