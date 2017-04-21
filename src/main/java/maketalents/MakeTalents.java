@@ -1,6 +1,6 @@
 package maketalents;
 
-import maketalents.dao.DataPropReader;
+import maketalents.dao.DataPropReaderImpl;
 import maketalents.datamodel.UserData;
 
 public class MakeTalents {
@@ -8,13 +8,13 @@ public class MakeTalents {
         UserData userDataReadFromFile = new UserData();
 
         String propFilePath1 = "/data1.properties"; // use absolute path to .properties from .jar root
-        DataPropReader dataPropReader1 = new DataPropReader(propFilePath1, userDataReadFromFile);
+        DataPropReaderImpl dataPropReaderImpl1 = new DataPropReaderImpl(propFilePath1, userDataReadFromFile);
 
         String propFilePath2 = "/data2.properties"; // use absolute path to .properties from .jar root
-        DataPropReader dataPropReader2 = new DataPropReader(propFilePath2, userDataReadFromFile);
+        DataPropReaderImpl dataPropReaderImpl2 = new DataPropReaderImpl(propFilePath2, userDataReadFromFile);
 
-        Thread thread1 = new Thread(dataPropReader1);
-        Thread thread2 = new Thread(dataPropReader2);
+        Thread thread1 = new Thread(dataPropReaderImpl1);
+        Thread thread2 = new Thread(dataPropReaderImpl2);
 
         thread1.start();
         thread2.start();
@@ -25,9 +25,8 @@ public class MakeTalents {
             e.printStackTrace();
         }
 
-
         String templateHtmlPath = "/template.html"; // use absolute path to template.html from .jar root
-        HtmlBuilder htmlBuilder = new HtmlBuilder(templateHtmlPath);
+        HtmlBuilderImpl htmlBuilder = new HtmlBuilderImpl(templateHtmlPath);
         htmlBuilder.makeHtml(userDataReadFromFile);
     }
 }

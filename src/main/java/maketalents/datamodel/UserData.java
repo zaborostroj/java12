@@ -7,86 +7,32 @@ import java.util.Collections;
  * Object holds user data read from .property file
  */
 public class UserData {
-    private String DEF_PHOTO_PATH = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg";
-
-    /**
-     * Name
-     */
     private String name;
-
-    /**
-     * Birthday
-     */
     private String birthDay;
-
-    /**
-     * Phone number
-     */
     private String phoneNumber;
-
-    /**
-     * E-mail
-     */
     private String email;
-
-    /**
-     * Skype
-     */
     private String skype;
-
-    /**
-     * Photo
-     */
     private String photo;
-
-    /**
-     * Goal
-     */
     private String goal;
-
-    /**
-     * Experience
-     */
     private String experience;
-
-    /**
-     * Education
-     */
     private String education;
-
-    /**
-     * Additional education, courses etc
-     */
     private String addEducation;
-
-    /**
-     * Other info
-     */
     private String otherInfo;
-
-    /**
-     * Values separator for multykey properties
-     */
     private String propertySeparator;
-
-    /**
-     * Properties that should be converted to <ol/> in output.html
-     */
     private ArrayList<String> multykeyProperties;
 
     public UserData() {
-        String NOT_AVAILABLE = "N/A"; // Default value for empty fields
-        name = NOT_AVAILABLE;
-        birthDay = NOT_AVAILABLE;
-        phoneNumber = NOT_AVAILABLE;
-        email = NOT_AVAILABLE;
-        skype = NOT_AVAILABLE;
-        photo = DEF_PHOTO_PATH;
-        goal = NOT_AVAILABLE;
-        experience = NOT_AVAILABLE;
-        education = NOT_AVAILABLE;
-        addEducation = NOT_AVAILABLE;
-        otherInfo = NOT_AVAILABLE;
+        name = null;
+        birthDay = null;
+        phoneNumber = null;
+        email = null;
+        skype = null;
+        photo = "https://pp.userapi.com/c629100/v629100402/4fe7f/4UOgawRYOhU.jpg";
+        goal = null;
+        experience = null;
+        education = null;
+        addEducation = null;
+        otherInfo = null;
         propertySeparator = null;
         multykeyProperties = null;
     }
@@ -185,6 +131,10 @@ public class UserData {
 
     public synchronized void setPropertySeparator(String propertySeparator) {
         this.propertySeparator = propertySeparator;
+    }
+
+    public synchronized ArrayList<String> getMultykeyProperties() {
+        return this.multykeyProperties;
     }
 
     public synchronized void setMultykeyProperties(String multykeyProperties) {
